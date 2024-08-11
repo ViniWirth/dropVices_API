@@ -19,6 +19,8 @@ const registroConvencional = async (req, res) => {
     valorMaco,
   ];
 
+  console.log(values);
+
   const sql = `INSERT INTO apoiado (email, senha, nome, dataNascimento, tipoConsumo, quantidadeMacos, valorMaco) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(sql, values, (err, results) => {
@@ -38,8 +40,8 @@ const registroEletronico = async (req, res) => {
     nome,
     dataNascimento,
     tipoConsumo,
-    quantidadeMacos,
-    valorMaco,
+    valorCigarroEletronico,
+    duracaoCigarroEletronico,
   } = req.body;
 
   const values = [
@@ -48,8 +50,8 @@ const registroEletronico = async (req, res) => {
     nome,
     dataNascimento,
     tipoConsumo,
-    quantidadeMacos,
-    valorMaco,
+    valorCigarroEletronico,
+    duracaoCigarroEletronico,
   ];
 
   const sql = `INSERT INTO apoiado (email, senha, nome, dataNascimento, tipoConsumo, valorCigarroEletronico, duracaoCigarroEletronico) VALUES (?, ?, ?, ?, ?, ?, ?)`;
