@@ -1,3 +1,4 @@
+//FAZER TUDO EM SÓ UMA ROTA
 const registroConvencional = async (req, res) => {
   const {
     email,
@@ -9,6 +10,10 @@ const registroConvencional = async (req, res) => {
     valorMaco,
   } = req.body;
 
+  let currentDate = new Date().toISOString().split("T")[0];
+  console.log(currentDate);
+  const ultimoDiaQueFumou = currentDate;
+
   const values = [
     email,
     senha,
@@ -17,11 +22,12 @@ const registroConvencional = async (req, res) => {
     tipoConsumo,
     quantidadeMacos,
     valorMaco,
+    ultimoDiaQueFumou,
   ];
 
   console.log(values);
 
-  const sql = `INSERT INTO apoiado (email, senha, nome, dataNascimento, tipoConsumo, quantidadeMacos, valorMaco) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  const sql = `INSERT INTO apoiado (email, senha, nome, dataNascimento, tipoConsumo, quantidadeMacos, valorMaco, ultimoDiaQueFumou) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
   db.query(sql, values, (err, results) => {
     if (err) {
