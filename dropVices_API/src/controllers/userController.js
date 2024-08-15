@@ -63,16 +63,17 @@ const login = async (req, res) => {
       res.status(401).send("Email ou senha incorretos");
       return;
     }
-    res.send("Login realizado com sucesso");
+    res.send({"message": "Login realizado com sucesso", "idapoiado": apoiado.idapoiado});  
   });
+
 };
 
 
 
 const getUltimoDiaQueFumou = async (req, res) => {
-  const sql = "SELECT ultimoDiaQueFumou FROM apoiado WHERE id = ?";
+  const sql = "SELECT ultimoDiaQueFumou FROM apoiado WHERE idapoiado = ?";
 
-  db.query(sql, [req.query.email], (err, results) => {
+  db.query(sql, [req.query.idapoiado], (err, results) => {
     if (err) {
       console.error("Erro ao executar a consulta:", err);
       res.status(500).send("Erro ao executar a consulta");
