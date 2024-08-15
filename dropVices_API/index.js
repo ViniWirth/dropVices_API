@@ -1,6 +1,6 @@
 express = require("express");
 const app = express();
-const port = 3000;
+const port = 16822;
 mysql = require("mysql2");
 db = require("./src/models/connect");
 const routes = require("./src/routers/userRouter");
