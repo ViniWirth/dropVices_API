@@ -10,7 +10,6 @@ const registro = async (req, res) => {
     valorMaco,
     valorCigarroEletronico,
     duracaoCigarroEletronico,
-
   } = req.body;
 
   let currentDate = new Date().toISOString().split("T")[0];
@@ -63,12 +62,12 @@ const login = async (req, res) => {
       res.status(401).send("Email ou senha incorretos");
       return;
     }
-    res.send({"message": "Login realizado com sucesso", "idapoiado": apoiado.idapoiado});  
+    res.send({
+      message: "Login realizado com sucesso",
+      idapoiado: apoiado.idapoiado,
+    });
   });
-
 };
-
-
 
 const getUltimoDiaQueFumou = async (req, res) => {
   const sql = "SELECT ultimoDiaQueFumou FROM apoiado WHERE idapoiado = ?";
@@ -87,7 +86,22 @@ const getUltimoDiaQueFumou = async (req, res) => {
   });
 };
 
-
+const getValores = async (req, res) => {
+  const sql =
+    "SELECT tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico,duracaoCigarroEletronico FROM apoiado WHERE idapoiado = ?";
+  db.query(sql, [req.query.idapoiado], (err, results) => {
+    if (err) {
+      console.error("Erro ao executar a consulta:", err);
+      res.status(500).send("Erro ao executar a consulta");
+      return;
+    }
+    if (results.length > 0) {
+      res.json(results[0]);
+    } else {
+      res.status(404).send("Usuário não encontrado");
+    }
+  });
+};
 
 const consultaDados = async (req, res) => {
   const sql = "SELECT * FROM apoiado";
@@ -106,5 +120,6 @@ module.exports = {
   registro,
   login,
   getUltimoDiaQueFumou,
+  getValores,
   consultaDados,
 };
