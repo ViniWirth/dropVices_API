@@ -1,8 +1,14 @@
+const mysql = require("mysql2"); // Importa o módulo mysql2
+
 const db = mysql.createConnection({
-  host: "viaduct.proxy.rlwy.net",
+  //host: "viaduct.proxy.rlwy.net",
+  host: "localhost",
   user: "root",
-  password: "AavzeFOUJWItVobkdZzxXsMrpidCKoeP",
-  database: "railway",
+  //password: "AavzeFOUJWItVobkdZzxXsMrpidCKoeP",
+  password: "",
+  //database: "railway",
+  database: "dropvicestop",
+  //port: 16822,
 });
 
 db.connect((err) => {

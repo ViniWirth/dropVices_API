@@ -1,5 +1,6 @@
-//FAZER TUDO EM SÓ UMA ROTA
-const registro = async (req, res) => {
+const db = require('../models/connect');
+
+const registro = (req, res) => {
   const {
     email,
     senha,
@@ -12,8 +13,7 @@ const registro = async (req, res) => {
     duracaoCigarroEletronico,
   } = req.body;
 
-  let currentDate = new Date().toISOString().split("T")[0];
-  console.log(currentDate);
+  let currentDate = new Date().toISOString().split('T')[0];
   const ultimoDiaQueFumou = currentDate;
 
   const values = [
@@ -29,87 +29,84 @@ const registro = async (req, res) => {
     ultimoDiaQueFumou,
   ];
 
-  console.log(values);
-
   const sql = `INSERT INTO apoiado (email, senha, nome, dataNascimento, tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico, duracaoCigarroEletronico, ultimoDiaQueFumou) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-  db.query(sql, values, (err, results) => {
+  db.query(sql, values, (err) => {
     if (err) {
-      console.error("Erro ao inserir dados:", err);
-      res.status(500).send("Erro ao inserir dados");
+      console.error('Erro ao inserir dados:', err);
+      res.status(500).send('Erro ao inserir dados');
       return;
     }
-    res.send("Usuário registrado!");
+    res.send('Usuário registrado!');
   });
 };
 
-const login = async (req, res) => {
+const login = (req, res) => {
   const { email, senha } = req.body;
-  const sql = "SELECT * FROM apoiado WHERE email = ?";
+  const sql = 'SELECT * FROM apoiado WHERE email = ?';
 
   db.query(sql, [email], (err, results) => {
     if (err) {
-      console.error("Erro ao executar a consulta:", err);
-      res.status(500).send("Erro ao executar a consulta");
+      console.error('Erro ao executar a consulta:', err);
+      res.status(500).send('Erro ao executar a consulta');
       return;
     }
     if (results.length === 0) {
-      res.status(401).send("Email ou senha incorretos");
-      return;
+      return res.status(401).send('Email ou senha incorretos');
     }
     const apoiado = results[0];
     if (apoiado.senha !== senha) {
-      res.status(401).send("Email ou senha incorretos");
-      return;
+      return res.status(401).send('Email ou senha incorretos');
     }
     res.send({
-      message: "Login realizado com sucesso",
+      message: 'Login realizado com sucesso',
       idapoiado: apoiado.idapoiado,
     });
   });
 };
 
-const getUltimoDiaQueFumou = async (req, res) => {
-  const sql = "SELECT ultimoDiaQueFumou FROM apoiado WHERE idapoiado = ?";
+const getUltimoDiaQueFumou = (req, res) => {
+  const sql = 'SELECT ultimoDiaQueFumou FROM apoiado WHERE idapoiado = ?';
 
   db.query(sql, [req.query.idapoiado], (err, results) => {
     if (err) {
-      console.error("Erro ao executar a consulta:", err);
-      res.status(500).send("Erro ao executar a consulta");
+      console.error('Erro ao executar a consulta:', err);
+      res.status(500).send('Erro ao executar a consulta');
       return;
     }
     if (results.length > 0) {
       res.json({ ultimoDiaQueFumou: results[0].ultimoDiaQueFumou });
     } else {
-      res.status(404).send("Usuário não encontrado");
+      res.status(404).send('Usuário não encontrado');
     }
   });
 };
 
-const getValores = async (req, res) => {
+const getValores = (req, res) => {
   const sql =
-    "SELECT tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico,duracaoCigarroEletronico FROM apoiado WHERE idapoiado = ?";
+    'SELECT tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico, duracaoCigarroEletronico FROM apoiado WHERE idapoiado = ?';
+
   db.query(sql, [req.query.idapoiado], (err, results) => {
     if (err) {
-      console.error("Erro ao executar a consulta:", err);
-      res.status(500).send("Erro ao executar a consulta");
+      console.error('Erro ao executar a consulta:', err);
+      res.status(500).send('Erro ao executar a consulta');
       return;
     }
     if (results.length > 0) {
       res.json(results[0]);
     } else {
-      res.status(404).send("Usuário não encontrado");
+      res.status(404).send('Usuário não encontrado');
     }
   });
 };
 
-const consultaDados = async (req, res) => {
-  const sql = "SELECT * FROM apoiado";
+const consultaDados = (req, res) => {
+  const sql = 'SELECT * FROM apoiado';
 
   db.query(sql, (err, results) => {
     if (err) {
-      console.error("Erro ao executar a consulta:", err);
-      res.status(500).send("Erro ao executar a consulta");
+      console.error('Erro ao executar a consulta:', err);
+      res.status(500).send('Erro ao executar a consulta');
       return;
     }
     res.json(results);
