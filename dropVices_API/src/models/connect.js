@@ -1,14 +1,27 @@
-const mysql = require("mysql2"); // Importa o módulo mysql2
+const mysql = require("mysql2");
 
 const db = mysql.createConnection({
-  //host: "viaduct.proxy.rlwy.net",
+
   host: "localhost",
+  //host: 'mysql.infocimol.com.br',
+
   user: "root",
-  //password: "AavzeFOUJWItVobkdZzxXsMrpidCKoeP",
+  //user: 'infocimol16',
+
   password: "",
-  //database: "railway",
+  //password: 'dropVices321',
+
   database: "dropvicestop",
-  //port: 16822,
+  //database: 'infocimol16',
+
+  //connectTimeout: 10000
+
+
+  //host: 'mysql.infocimol.com.br',
+   //user: 'infocimol15',
+   //password: 'zaqwer720',
+   //database: 'infocimol15',
+   //connectTimeout: 10000
 });
 
 db.connect((err) => {
