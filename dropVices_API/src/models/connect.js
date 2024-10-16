@@ -2,19 +2,19 @@ const mysql = require("mysql2");
 
 const db = mysql.createConnection({
 
-  host: "localhost",
-  //host: 'mysql.infocimol.com.br',
+  //host: "localhost",
+  host: 'mysql.infocimol.com.br',
 
-  user: "root",
-  //user: 'infocimol16',
+  //user: "root",
+  user: 'infocimol16',
 
-  password: "",
-  //password: 'dropVices321',
+  //password: "",
+  password: 'dropVices321',
 
-  database: "dropvicestop",
-  //database: 'infocimol16',
+  //database: "dropvicestop",
+  database: 'infocimol16',
 
-  //connectTimeout: 10000
+  connectTimeout: 10000
 
 
   //host: 'mysql.infocimol.com.br',
