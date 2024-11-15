@@ -84,7 +84,7 @@ const getUltimoDiaQueFumou = (req, res) => {
 
 const getValores = (req, res) => {
   const sql =
-    'SELECT tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico, duracaoCigarroEletronico FROM apoiado WHERE idapoiado = ?';
+    'SELECT nome, tipoConsumo, quantidadeMacos, valorMaco, valorCigarroEletronico, duracaoCigarroEletronico FROM apoiado WHERE idapoiado = ?';
 
   db.query(sql, [req.query.idapoiado], (err, results) => {
     if (err) {
