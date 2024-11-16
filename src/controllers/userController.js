@@ -113,10 +113,28 @@ const consultaDados = (req, res) => {
   });
 };
 
+const atualizarUltimoDiaQueFumou = (req, res) => {
+  const { idapoiado } = req.body;
+  const currentDate = new Date().toISOString().split('T')[0];
+  const formattedDate = new Date(currentDate).toLocaleDateString('pt-BR');
+  console.log(formattedDate);
+
+  const sql = 'UPDATE apoiado SET ultimoDiaQueFumou = ? WHERE idapoiado = ?';
+  db.query(sql, [currentDate, idapoiado], (err) => {
+    if (err) {
+      console.error('Erro ao atualizar o último dia que fumou:', err);
+      res.status(500).send('Erro ao atualizar o último dia que fumou');
+      return;
+    }
+    res.send('Último dia que fumou atualizado com sucesso');
+  });
+};
+
 module.exports = {
   registro,
   login,
   getUltimoDiaQueFumou,
   getValores,
   consultaDados,
+  atualizarUltimoDiaQueFumou,
 };
