@@ -130,6 +130,20 @@ const atualizarUltimoDiaQueFumou = (req, res) => {
   });
 };
 
+const atualizarValores = (req, res) => {
+  const { idapoiado, campo, valor } = req.body;
+
+  const sql = `UPDATE apoiado SET ${campo} = ? WHERE idapoiado = ?`;
+  db.query(sql, [valor, idapoiado], (err) => {
+    if (err) {
+      console.error('Erro ao atualizar os valores:', err);
+      res.status(500).send('Erro ao atualizar os valores');
+      return;
+    }
+    res.send('Valores atualizados com sucesso');
+  });
+};
+
 module.exports = {
   registro,
   login,
@@ -137,4 +151,5 @@ module.exports = {
   getValores,
   consultaDados,
   atualizarUltimoDiaQueFumou,
+  atualizarValores, // Adicione esta linha
 };
